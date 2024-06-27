@@ -4892,7 +4892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 839220467295417479}
-  damage: 1
+  damage: 6
   speed: 12
   destroyTime: 2
   type: {fileID: 11400000, guid: 27fa8ba003ebf954c88b9820ded4995d, type: 2}

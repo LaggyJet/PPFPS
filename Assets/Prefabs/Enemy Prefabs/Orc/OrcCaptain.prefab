@@ -807,6 +807,9 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: 19c1a9185716ec34884e00e951051bbd, type: 2}
   enemyLimiter: {fileID: 11400000, guid: 69592759934e6014b923381164fcf075, type: 2}
   range: 5
+  isAttacking: 0
+  wasKilled: 0
+  isDOT: 0
 --- !u!136 &560602550255163605
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -824,7 +827,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.3
   m_Height: 1.5
