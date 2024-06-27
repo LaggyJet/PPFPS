@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
     //these variables are game function variables that may likely be changed
     [SerializeField] bool shootProjectile;
     
-    [SerializeField] float hp;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int gravity;
@@ -128,8 +127,6 @@ public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
             //plays our shooting animation
             animate.SetTrigger("Shoot Fire");
         }
-
-        SecondaryFireCheck();
     }
 
     //calculates the player movement
@@ -202,8 +199,6 @@ public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
 
         audioSource.PlayOneShot(attack[Random.Range(0, attack.Length)], attackVol);
 
-        //plays our shooting animation
-        animate.SetTrigger("Shoot Fire");
         //sets up our collision detection
         if(!shootProjectile)
         {

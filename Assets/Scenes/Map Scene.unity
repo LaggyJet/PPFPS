@@ -2108,6 +2108,10 @@ PrefabInstance:
       value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 2211587878432594664, guid: cc49ce404f390c440b5085473052a07b, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211587878432594664, guid: cc49ce404f390c440b5085473052a07b, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -2438,6 +2442,10 @@ PrefabInstance:
     - target: {fileID: 6677421377204846125, guid: cc49ce404f390c440b5085473052a07b, type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 6681874563803369764, guid: cc49ce404f390c440b5085473052a07b, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6681874563803369764, guid: cc49ce404f390c440b5085473052a07b, type: 3}
       propertyPath: m_TagString
