@@ -15,7 +15,7 @@ public class SpiderController : MonoBehaviour, IDamage {
     [SerializeField] GameObject spider;
     [SerializeField] int spawnRate, spawnAmount;
 
-    bool isAttacking, wasKilled, isSpawningSpiders, onCooldown, isDOT;
+    public bool isAttacking, wasKilled, isSpawningSpiders, onCooldown, isDOT;
     DamageStats status;
     Vector3 playerDirection;
     float currentAngle;
@@ -98,6 +98,7 @@ public class SpiderController : MonoBehaviour, IDamage {
             gameObject.GetComponent<Collider>().enabled = false;
             StartCoroutine(DeathAnimation());
             wasKilled = true;
+            Invoke("Win", 2); //done to prevent glitchy menu
         }
 
         if (!isAttacking && !onCooldown)
@@ -155,5 +156,10 @@ public class SpiderController : MonoBehaviour, IDamage {
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         model.material.color = new Color(0.5f, 0.5f, 0.5f, 1);
+    }
+
+    private void Win()
+    {
+        GameManager.instance.gameWon();
     }
 }

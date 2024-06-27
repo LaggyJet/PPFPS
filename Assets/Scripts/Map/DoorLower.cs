@@ -9,10 +9,11 @@ public class DoorLower : MonoBehaviour
     public GameObject enemy; //enemy that needs killed to open door
     public int killThreshold;
 
-
     void Update()
     {
-        if (EnemyManager.Instance.GetKilledEnemyCount(enemy.GetComponent<EnemyAI>().enemyLimiter) > killThreshold)
+        if (EnemyManager.Instance.GetKilledEnemyCount(enemy.GetComponent<EnemyAI>().enemyLimiter) >= killThreshold) {
             Destroy(gameObject);
+            EnemyManager.Instance.ResetKillCounter(enemy.GetComponent<EnemyAI>().enemyLimiter);
+        }
     }
 }

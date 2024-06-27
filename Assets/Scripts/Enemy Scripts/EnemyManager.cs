@@ -22,6 +22,8 @@ public class EnemyManager : MonoBehaviour {
 
     public void UpdateKillCounter(EnemyLimiter type) { enemiesDead[GetEnemyIndex(type)]++; }
 
+    public void ResetKillCounter(EnemyLimiter type) { enemiesDead[GetEnemyIndex(type)] = 0; }
+
     public int GetKilledEnemyCount(EnemyLimiter type) { return enemiesDead[GetEnemyIndex(type)]; }
 
     int GetEnemyIndex(EnemyLimiter type) { return currentEnemies.FindIndex(tuple => tuple.Item1.Equals(type)); }

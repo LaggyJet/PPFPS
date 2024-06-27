@@ -42,6 +42,7 @@ public class ButtonFunctions : MonoBehaviour
     {
         SceneManager.LoadScene("Build Scene");
         DataPersistenceManager.Instance.NewGame();
+        GameManager.instance.player.transform.position = new Vector3(-18.7507896f, 0.108012557f, 81.6620026f);
     }
     public void loadGame()
     {

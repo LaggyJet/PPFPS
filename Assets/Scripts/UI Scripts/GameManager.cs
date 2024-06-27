@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuLose;
     [SerializeField] TMP_Text enemyCountText;
     [SerializeField] GameObject charSelect;
+    public bool hasRespawned = false; 
 
     //public variables
     public Image playerHPBar;

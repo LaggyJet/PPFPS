@@ -8,5 +8,6 @@ public class SavePoint : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         DataPersistenceManager.Instance.SaveGame();
+        GameManager.instance.playerLocation = other.transform.position;
     }
 }

@@ -10,7 +10,7 @@ public class Shake : MonoBehaviour
     Transform targetObject;
     Vector3 initialPosition;
     float shakeDuration = 0f;
-    bool isShaking = false;
+    public bool isShaking = false; 
 
     // Implementing my 1-10 system 
     [Range(0f, 10f)]public float intensity; 
@@ -50,6 +50,8 @@ public class Shake : MonoBehaviour
 
     IEnumerator DoShake()
     {
+
+        GameManager.instance.hasRespawned = false;
         // Start shaking 
         isShaking = true;
 
@@ -57,7 +59,7 @@ public class Shake : MonoBehaviour
         float seconds = Time.time;
         while (Time.time < seconds + shakeDuration)
         {
-            if (GameManager.instance != null && !GameManager.instance.isPaused)  
+            if (GameManager.instance != null && !GameManager.instance.isPaused)   
             { 
             // Generate random position, keep local position ( DO NOT ADJUST OBJECT LOCATION COMPLETELY !!!)
             var random = new Vector3(Random.Range(-1f, 1f) * intensity, Random.Range(-1f, 1f) * intensity, 0f);

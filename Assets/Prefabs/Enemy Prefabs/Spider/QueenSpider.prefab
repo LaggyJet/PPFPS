@@ -15101,9 +15101,9 @@ MonoBehaviour:
   model: {fileID: 7281938634968914319}
   agent: {fileID: 4722091004508283191}
   anim: {fileID: 6147722694246648755}
-  hp: 10
+  hp: 30
   faceTargetSpeed: 90
-  distanceFromPlayer: 20
+  distanceFromPlayer: 5
   spitCooldown: 10
   spitEffectPS: {fileID: 1022400057398966362}
   acidPuddle: {fileID: 2518831375690429639}
@@ -15111,6 +15111,11 @@ MonoBehaviour:
   spider: {fileID: 639156844943288045, guid: 70971999df85ec24e9e038d5a65f782a, type: 3}
   spawnRate: 10
   spawnAmount: 2
+  isAttacking: 0
+  wasKilled: 0
+  isSpawningSpiders: 0
+  onCooldown: 0
+  isDOT: 0
 --- !u!95 &6147722694246648755
 Animator:
   serializedVersion: 5
