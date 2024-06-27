@@ -2,8 +2,11 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
 {
@@ -12,6 +15,7 @@ public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
 
     //these variables are game function variables that may likely be changed
     [SerializeField] bool shootProjectile;
+    
     [SerializeField] float hp;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
@@ -19,13 +23,32 @@ public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
 
+    [Header("------- HP -------")]
+    
+    [Range(0f, 10f)] public float hp; 
+    float hpBase;
+
     // Health bar gradual fill 
     [SerializeField] Color fullHealth; 
     [SerializeField] Color midHealth; 
     [SerializeField] Color criticalHealth;
 
     // HP bar shake
-    [Range(0f, 10f)] public float duration;  
+    [Range(0f, 10f)] public float hpDuration;  
+
+    [Header("------- Stamina -------")]
+
+    [Range(0f, 10f)] public float stamina; 
+    float staminaBase; 
+    
+     // stamina bar gradual fill 
+    [SerializeField] Color fullstamina; 
+    [SerializeField] Color midstamina; 
+    [SerializeField] Color criticalstamina;
+
+    // stamina bar shake
+    [Range(0f, 10f)] public float stamDuration;   
+
    
 
     //these are combat variables
@@ -43,13 +66,14 @@ public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
     //these are variables used explicitly in functions
     DamageStats status;
     int jumpCount;
-    float hpBase;
     bool isShooting;
     bool isDead;
     bool isDOT;
 
     Vector3 moveDir;
     Vector3 playerV;
+
+    [SerializeField] Sprite sprite;
 
     //variables used for save/load
     public static Vector3 spawnLocation;
@@ -67,8 +91,9 @@ public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
     bool isPlayingSteps;
     bool isSprinting;
 
-    private void Awake()
+    private void Start()
     {
+        UnityEngine.UI.Image.DontDestroyOnLoad(GameManager.instance.playerHPBar);
         //tracks our base hp and the current hp that will update as our player takes damage or gets health
         hpBase = hp;
         this.transform.position = Vector3.zero;
@@ -98,11 +123,13 @@ public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
         Movement();
         Sprint();
 
-        if (Input.GetButton("Fire1") && !isShooting && !GameManager.instance.isPaused)
+        if (Input.GetButton("Fire1") && !isShooting && !GameManager.instance.isPaused && SceneManager.GetActiveScene().name != "title menu")
         {
-            //starts our shooting function
-            StartCoroutine(Shoot());
+            //plays our shooting animation
+            animate.SetTrigger("Shoot Fire");
         }
+
+        SecondaryFireCheck();
     }
 
     //calculates the player movement
@@ -168,7 +195,7 @@ public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
     }
 
     //this function handles everything to do with the player shooting
-    IEnumerator Shoot()
+    void ShootFire()
     {
         //sets shootings variable to true so we can only fire once at a time
         isShooting = true;
@@ -194,16 +221,7 @@ public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
             }
         }
         //spawns our projectile
-        else
-        {
-            yield return new WaitForSeconds(.2f);
-            Instantiate(projectile, shootPosition.transform.position, shootPosition.transform.rotation);
-        }
-        
-
-        //waits for x amount of time then sets shooting variable to false so we can fire again
-        yield return new WaitForSeconds(shootRate);
-        isShooting = false;
+        Instantiate(projectile, shootPosition.transform.position, shootPosition.transform.rotation);
     }
     public void Afflict(DamageStats type)
     {
@@ -269,23 +287,28 @@ public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
     }
 
     //the function for updating our ui
-    void updatePlayerUI()
+    public void updatePlayerUI()
     {
+        if(GameManager.instance.playerHPBar == null)
+        {
+            Debug.LogError("HELPEE AFJI IM GOING INSANE");
+        }
+
         // Variable for filling bar 
         float healthRatio = (float)hp / hpBase;
 
         // Storing 
         GameManager.instance.playerHPBar.fillAmount = healthRatio;
 
-        if (healthRatio > 0.5f || GameManager.instance.playerHPBar.color != midHealth) // If health is more than 50% full
-        {
-            GameManager.instance.playerHPBar.color = Color.Lerp(midHealth, fullHealth, (healthRatio - 0.5f) * 2);
-        }
-        else // If the health is less than 50%
-        {
-            GameManager.instance.playerHPBar.color = Color.Lerp(criticalHealth, midHealth, healthRatio * 2); 
-            Shake.instance.Shaking(duration);  
-        }
+            if (healthRatio > 0.5f || GameManager.instance.playerHPBar.color != midHealth) // If health is more than 50% full
+            {
+                GameManager.instance.playerHPBar.color = Color.Lerp(midHealth, fullHealth, (healthRatio - 0.5f) * 2);
+            }
+            else // If the health is less than 50%
+            {
+                GameManager.instance.playerHPBar.color = Color.Lerp(criticalHealth, midHealth, healthRatio * 2);
+                Shake.instance.Shaking(hpDuration);  
+            }
     }
     
     public void Respawn()
@@ -299,6 +322,7 @@ public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
         spawnLocation = data.playerPos;
         spawnRotation = data.playerRot;
         spawnHp = data.playerHp;
+        
     }
     public void SaveData(ref GameData data)
     {

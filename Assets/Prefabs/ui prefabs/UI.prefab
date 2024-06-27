@@ -953,7 +953,8 @@ MonoBehaviour:
   menuSettings: {fileID: 0}
   sfxStarting: 0
   bgmStarting: 0
-  playerHPBar: {fileID: 0}
+  playerHPBar: {fileID: 8896175301942061614}
+  playerManaBar: {fileID: 0}
   isPaused: 0
   player: {fileID: 0}
   playerScript: {fileID: 0}

@@ -24,7 +24,7 @@ public class Shake : MonoBehaviour
         instance = this;
 
         // Storing position, rotate, scale in target
-        targetObject = GetComponent<Transform>();
+        targetObject = GetComponent<Transform>(); 
 
         // Get Local position of object 
         initialPosition = targetObject.localPosition; 

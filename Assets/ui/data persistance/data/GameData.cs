@@ -12,6 +12,7 @@ public class GameData
     public Vector3 playerPos;
     public Quaternion playerRot;
     public float playerHp;
+    public float playerMana;
 
     public GameData()  //constructor - values are the initial values when starting a game
     {
