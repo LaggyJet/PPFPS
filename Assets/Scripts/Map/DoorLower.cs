@@ -13,8 +13,6 @@ public class DoorLower : MonoBehaviour
     void Update()
     {
         if (EnemyManager.Instance.GetKilledEnemyCount(enemy.GetComponent<EnemyAI>().enemyLimiter) > killThreshold)
-        {
             Destroy(gameObject);
-        }
     }
 }

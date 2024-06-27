@@ -9,13 +9,15 @@ public class EnemyManager : MonoBehaviour {
 
     // Enemy Type, Close Range, Attacking
     readonly List<Tuple<EnemyLimiter, List<int>, List<int>>> currentEnemies = new();
-    readonly List<int> enemiesDead;
+    readonly List<int> enemiesDead = new();
 
     void Awake() { Instance = this; }
 
     public void AddEnemyType(EnemyLimiter type) {
-        if (!currentEnemies.Any(tuple => tuple.Item1.Equals(type)))
+        if (!currentEnemies.Any(tuple => tuple.Item1.Equals(type))) {
             currentEnemies.Add(new Tuple<EnemyLimiter, List<int>, List<int>>(type, new List<int>(type.closeRangeAmount), new List<int>(type.attackAmount)));
+            enemiesDead.Add(0);
+        }
     }
 
     public void UpdateKillCounter(EnemyLimiter type) { enemiesDead[GetEnemyIndex(type)]++; }
