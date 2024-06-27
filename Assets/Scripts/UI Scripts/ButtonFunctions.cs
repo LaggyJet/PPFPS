@@ -54,7 +54,7 @@ public class ButtonFunctions : MonoBehaviour
     }
 
     //CLASS SELECTION
-    public void wretch()
+    public void warrior()
     {
         newGame();
         GameManager.instance.stateResume();

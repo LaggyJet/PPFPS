@@ -798,7 +798,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Wretch
+  m_text: Warrior
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cd8ac150faf1a7c4bb6080db92d7b73e, type: 2}
   m_sharedMaterial: {fileID: 7256592254068347555, guid: cd8ac150faf1a7c4bb6080db92d7b73e, type: 2}
@@ -1647,7 +1647,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 974418146}
         m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: startNewGame
+        m_MethodName: newGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2051,7 +2051,7 @@ GameObject:
   - component: {fileID: 1914844756}
   - component: {fileID: 1914844755}
   m_Layer: 5
-  m_Name: Wretch
+  m_Name: Warrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2124,7 +2124,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 974418146}
         m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: wretch
+        m_MethodName: warrior
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

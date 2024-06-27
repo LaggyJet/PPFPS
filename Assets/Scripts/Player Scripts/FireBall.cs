@@ -39,7 +39,7 @@ public class FireBall : MonoBehaviour
             //destroy our projectile
             Destroy(gameObject);
         }
-        else if (!other.gameObject.CompareTag("Player"))
+        else if (!other.gameObject.CompareTag("Player") && !other.isTrigger)
         {
             Destroy(gameObject);
         }

@@ -14,9 +14,8 @@ public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
     public CharacterController controller;
 
     //these variables are game function variables that may likely be changed
-    [SerializeField] bool shootProjectile;
     
-    [SerializeField] int speed;
+    [SerializeField] float speed;
     [SerializeField] int sprintMod;
     [SerializeField] int gravity;
     [SerializeField] int jumpMax;
@@ -56,6 +55,7 @@ public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
     [SerializeField] int shootDistance;
     [SerializeField] GameObject shootPosition;
     [SerializeField] GameObject projectile;
+    [SerializeField] GameObject fireSpray;
 
     //these are animation variables
     [SerializeField] Animator animate;
@@ -79,6 +79,7 @@ public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
     public static Quaternion spawnRotation;
     public static float spawnHp;
 
+    [Header("--audio--")]
     //Audio variables
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip[] footsteps;
@@ -124,8 +125,12 @@ public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
 
         if (Input.GetButton("Fire1") && !isShooting && !GameManager.instance.isPaused && SceneManager.GetActiveScene().name != "title menu")
         {
-            //plays our shooting animation
-            animate.SetTrigger("Shoot Fire");
+            //plays our primary shooting animation
+            animate.SetTrigger("PrimaryFire");
+        }
+        else if (Input.GetButtonDown("Fire2")  && !GameManager.instance.isPaused && SceneManager.GetActiveScene().name != "title menu")
+        {
+            SecondaryFireCheck();
         }
     }
 
@@ -192,32 +197,69 @@ public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
     }
 
     //this function handles everything to do with the player shooting
-    void ShootFire()
+    void PrimaryFire()
     {
         //sets shootings variable to true so we can only fire once at a time
         isShooting = true;
 
         audioSource.PlayOneShot(attack[Random.Range(0, attack.Length)], attackVol);
-
-        //sets up our collision detection
-        if(!shootProjectile)
-        {
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance))
-            {
-                Debug.Log(hit.transform.name);
-
-                IDamage dmg = hit.collider.GetComponent<IDamage>();
-
-                if (hit.transform != transform && dmg != null)
-                {
-                    dmg.TakeDamage(shootDamage);
-                }
-            }
-        }
+  
         //spawns our projectile
         Instantiate(projectile, shootPosition.transform.position, shootPosition.transform.rotation);
+        isShooting = false;
     }
+
+    void SecondaryFireCheck()
+    {
+        if (!isShooting)
+        {
+            isShooting = true;
+            animate.SetTrigger("SecondaryFireStart");
+        }
+        else if (isShooting)
+        {
+            isShooting = false;
+            animate.SetTrigger("SecondaryFireStop");
+            SecondaryFireStop();
+        }
+    }
+
+    void SecondaryFire()
+    {
+        audioSource.PlayOneShot(attack[Random.Range(0, attack.Length)], attackVol);
+
+        fireSpray.SetActive(true);
+        fireSpray.GetComponent<ParticleSystem>().Play();
+
+    }
+
+    private void OnParticleCollision(GameObject other)
+    {
+        float damage = 0.2f;
+        //when encountering a collision trigger it checks for component IDamage
+        IDamage dmg = other.GetComponent<IDamage>();
+
+        //if there is an IDamage component we run the inside code
+        if (dmg != null && !other.gameObject.CompareTag("Player"))
+        {
+            //deal damage to the object hit
+            dmg.TakeDamage(damage);
+            //destroy our projectile
+            Destroy(gameObject);
+        }
+        else if (!other.gameObject.CompareTag("Player") && !other.GetComponent<Collider>().isTrigger)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void SecondaryFireStop()
+    {
+        fireSpray.SetActive(false);
+        fireSpray.GetComponent<ParticleSystem>().Play(false);
+    }
+
+
     public void Afflict(DamageStats type)
     {
         status = type;
@@ -272,13 +314,13 @@ public class PlayerController : MonoBehaviour, IDamage, IDataPersistence
     //called when player runs into spiderwebs
     public void Slow()
     {
-        speed = speed / 2;
+        speed = speed / 7;
     }
 
     //called when player escapes spiderwebs
     public void UnSlow()
     {
-        speed = speed * 2;
+        speed = speed * 7;
     }
 
     //the function for updating our ui

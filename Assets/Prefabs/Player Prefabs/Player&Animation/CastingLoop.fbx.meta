@@ -43,7 +43,7 @@ ModelImporter:
       takeName: CastingLoop
       internalID: 0
       firstFrame: 40
-      lastFrame: 65
+      lastFrame: 47
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -63,8 +63,8 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.23809531
-        functionName: ShootFire
+      - time: 0.99267423
+        functionName: SecondaryFire
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
