@@ -6,16 +6,15 @@ using UnityEngine;
 
 public class DoorLower : MonoBehaviour
 {
-
-    public GameObject door;
     public GameObject enemy; //enemy that needs killed to open door
+    public int killThreshold;
 
 
-    public void lowerDoor()
+    void Update()
     {
-        if (enemy.IsDestroyed())
+        if (EnemyManager.Instance.GetKilledEnemyCount(enemy.GetComponent<EnemyAI>().enemyLimiter) > killThreshold)
         {
-            Destroy(door);
+            Destroy(gameObject);
         }
     }
 }

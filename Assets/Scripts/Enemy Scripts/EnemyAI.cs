@@ -17,8 +17,8 @@ public class EnemyAI : MonoBehaviour, IDamage {
     [SerializeField] float damage;
     [SerializeField] bool canDOT;
     [SerializeField] DamageStats type;
-    [SerializeField] EnemyLimiter enemyLimiter;
     [SerializeField] int range;
+    public EnemyLimiter enemyLimiter;
 
     DamageStats status;
     bool isAttacking, wasKilled, isDOT;
@@ -102,6 +102,7 @@ public class EnemyAI : MonoBehaviour, IDamage {
         if (hp > 0)
             StartCoroutine(FlashDamage());
         if (hp <= 0 && !wasKilled) {
+            EnemyManager.Instance.UpdateKillCounter(enemyLimiter);
             GameManager.instance.updateEnemy(-1);
             gameObject.GetComponent<Collider>().enabled = false;
             StartCoroutine(DeathAnimation());

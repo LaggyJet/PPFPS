@@ -9,7 +9,7 @@ public class EnemyManager : MonoBehaviour {
 
     // Enemy Type, Close Range, Attacking
     readonly List<Tuple<EnemyLimiter, List<int>, List<int>>> currentEnemies = new();
-    readonly public List<Tuple<EnemyLimiter, int>> enemiesDead;
+    readonly List<int> enemiesDead;
 
     void Awake() { Instance = this; }
 
@@ -18,9 +18,9 @@ public class EnemyManager : MonoBehaviour {
             currentEnemies.Add(new Tuple<EnemyLimiter, List<int>, List<int>>(type, new List<int>(type.closeRangeAmount), new List<int>(type.attackAmount)));
     }
 
-    public void UpdateKillCounter() {
-        enemiesDead
-    }
+    public void UpdateKillCounter(EnemyLimiter type) { enemiesDead[GetEnemyIndex(type)]++; }
+
+    public int GetKilledEnemyCount(EnemyLimiter type) { return enemiesDead[GetEnemyIndex(type)]; }
 
     int GetEnemyIndex(EnemyLimiter type) { return currentEnemies.FindIndex(tuple => tuple.Item1.Equals(type)); }
 
